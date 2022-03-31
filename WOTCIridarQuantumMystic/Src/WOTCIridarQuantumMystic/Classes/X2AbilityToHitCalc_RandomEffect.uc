@@ -1,7 +1,7 @@
 class X2AbilityToHitCalc_RandomEffect extends X2AbilityToHitCalc_StatCheck;
 
 // This is a gutted version of X2AbilityToHitCalc_StatCheck
-// We randomly select one multi target effect for each of the multi targets, trying to avoid duplicates as much as possible.
+// We randomly select one target effect out of all effects present on the abiility template.
 
 protected function int GetHitChance(XComGameState_Ability kAbility, AvailableTarget kTarget, optional out ShotBreakdown m_ShotBreakdown, optional bool bDebugLog = false)
 {

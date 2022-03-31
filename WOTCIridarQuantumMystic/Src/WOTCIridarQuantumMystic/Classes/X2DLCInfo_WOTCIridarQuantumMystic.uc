@@ -2,6 +2,8 @@ class X2DLCInfo_WOTCIridarQuantumMystic extends X2DownloadableContentInfo;
 
 var localized array<string> WisdomOfChopra;
 
+var config array<name> StartingItemsToAddOnSaveLoad;
+
 /// <summary>
 /// Called after the Templates have been created (but before they are validated) while this DLC / Mod is installed.
 /// </summary>
@@ -42,6 +44,7 @@ static event OnPostTemplatesCreated()
 
 	// 1. Add all abilities in the game into Quantum Mystic's random ability deck.
 	SoldierAbility.ApplyToWeaponSlot = eInvSlot_PrimaryWeapon;
+	TemplateNames.RemoveItem('QuantumMysticism');
 
 	foreach TemplateNames(TemplateName)
 	{
@@ -115,7 +118,31 @@ static event OnPostTemplatesCreated()
 
 		TemplateNames.RemoveItem(TemplateName);
 	}
+
+	AddGTSUnlockTemplate('IRI_QuantumMystic_GTS');
 }
+
+static private function AddGTSUnlockTemplate(name UnlockTemplateName)
+{
+    local X2StrategyElementTemplateManager  TechMgr;
+    local X2FacilityTemplate                Template;
+    local array<X2DataTemplate>             DifficultyVariants;
+    local X2DataTemplate                    DifficultyVariant;
+
+    TechMgr = class'X2StrategyElementTemplateManager'.static.GetStrategyElementTemplateManager();
+
+    TechMgr.FindDataTemplateAllDifficulties('OfficerTrainingSchool', DifficultyVariants);
+
+    foreach DifficultyVariants(DifficultyVariant)
+    {
+        Template = X2FacilityTemplate(DifficultyVariant);
+        if (Template != none)
+        {
+           Template.SoldierUnlockTemplates.AddItem(UnlockTemplateName);
+        }
+    }
+}
+
 
 static private function bool IsAdditionalAbility(const name TemplateName, X2AbilityTemplateManager AbilityMgr)
 {
@@ -236,7 +263,53 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 /// </summary>
 static event OnLoadedSavedGame()
 {
+	local XComGameStateHistory				History;
+	local XComGameState						NewGameState;
+	local XComGameState_HeadquartersXCom	XComHQ;
+	local XComGameState_Item				ItemState;
+	local X2ItemTemplate					ItemTemplate;
+	local name								TemplateName;
+	local X2ItemTemplateManager				ItemMgr;
+	local bool								bChange;
 
+	History = `XCOMHISTORY;	
+	XComHQ = `XCOMHQ;
+	ItemMgr = class'X2ItemTemplateManager'.static.GetItemTemplateManager();	
+
+	NewGameState = class'XComGameStateContext_ChangeContainer'.static.CreateChangeState("WOTCMoreSparkWeapons: Add Starting Items");
+	XComHQ = XComGameState_HeadquartersXCom(NewGameState.ModifyStateObject(class'XComGameState_HeadquartersXCom', XComHQ.ObjectID));
+
+	//	-------------------------------------------------------------------------
+	//	ADD STARTING ITEMS TO HQ INVENTORY
+
+	//	Add an instance of the specified item template into HQ inventory
+	foreach default.StartingItemsToAddOnSaveLoad(TemplateName)
+	{
+		ItemTemplate = ItemMgr.FindItemTemplate(TemplateName);
+
+		//	If the item is not in the HQ Inventory already
+		if (ItemTemplate != none && !XComHQ.HasItem(ItemTemplate))
+		{
+			//	If it's a starting item or if the schematic this item is created by is present in the HQ inventory
+			if (ItemTemplate.StartingItem || ItemTemplate.CreatorTemplateName != '' && XComHQ.HasItemByName(ItemTemplate.CreatorTemplateName))
+			{	
+				ItemState = ItemTemplate.CreateInstanceFromTemplate(NewGameState);
+				NewGameState.AddStateObject(ItemState);
+				XComHQ.AddItemToHQInventory(ItemState);	
+
+				bChange = true;
+			}
+		}
+	}
+
+	if (bChange)
+	{
+		History.AddGameStateToHistory(NewGameState);
+	}
+	else
+	{
+		History.CleanupPendingGameState(NewGameState);
+	}
 }
 
 /// <summary>

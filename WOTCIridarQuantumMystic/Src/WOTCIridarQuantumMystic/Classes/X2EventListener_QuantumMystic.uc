@@ -7,6 +7,7 @@ static function array<X2DataTemplate> CreateTemplates()
 	local array<X2DataTemplate> Templates;
 
 	Templates.AddItem(Create_ListenerTemplate());
+	Templates.AddItem(Create_StrategicListenerTemplate());
 
 	return Templates;
 }
@@ -21,6 +22,7 @@ static function CHEventListenerTemplate Create_ListenerTemplate()
 	Template.RegisterInStrategy = true;
 
 	Template.AddCHEvent('GetLocalizedCategory', OnGetLocalizedCategory, ELD_Immediate, 50);
+	
 
 	return Template;
 }
@@ -46,4 +48,38 @@ static function EventListenerReturn OnGetLocalizedCategory(Object EventData, Obj
 	}
 
 	return ELR_NoInterrupt;
+}
+
+static function CHEventListenerTemplate Create_StrategicListenerTemplate()
+{
+	local CHEventListenerTemplate Template;
+
+	`CREATE_X2TEMPLATE(class'CHEventListenerTemplate', Template, 'X2EventListener_QuantumMystic_Strategy');
+
+	Template.RegisterInTactical = false;
+	Template.RegisterInStrategy = true;
+
+	Template.AddCHEvent('OverrideRespecSoldierProjectPoints', OnOverrideRespecSoldierProjectPoints, ELD_Immediate, 50);
+	
+
+	return Template;
+}
+
+static function EventListenerReturn OnOverrideRespecSoldierProjectPoints(Object EventData, Object EventSource, XComGameState GameState, Name EventID, Object CallbackObject)
+{
+    local XComLWTuple Tuple;
+    local XComGameState_Unit Unit;
+
+	if (`XCOMHQ.HasSoldierUnlockTemplate('IRI_QuantumMystic_GTS'))
+	{
+		Tuple = XComLWTuple(EventData);
+		Unit = XComGameState_Unit(Tuple.Data[0].o);
+
+		if (Unit != none && Unit.GetSoldierClassTemplateName() == 'QuantumMystic')
+		{
+			Tuple.Data[1].i = 1; // ProjectPoints
+		}
+	}
+
+    return ELR_NoInterrupt;
 }

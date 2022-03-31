@@ -33,6 +33,9 @@
     <Content Include="Config\XComGameData.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\XComStrategyTuning.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\XComTemplateCreator.ini">
       <SubType>Content</SubType>
     </Content>

@@ -8,27 +8,32 @@ LocFlyOverText="Quantum Mysticism"
 [MysticStaff_CV X2PairedWeaponTemplate]
 FriendlyName="Quantum Mystic Staff"
 FriendlyNamePlural="Quantum Staves"
-BriefSummary="The Battle Scanner provides extra vision on the battlefield. Soldiers deploy it like a grenade, throwing it to a hidden area of the map that they want to reveal. Any hidden or disguised enemies will be revealed as well."
-TacticalText="<Bullet/> Battle Scanners reveal an area hidden by the \"fog of war\" for multiple turns.\n<Bullet/> Battle Scanners also reveal hidden or disguised enemies."
+BriefSummary="This staff is normally used to defend against dogs set on the quantum mystic as they are being chased out of town after their business routine."
+TacticalText="This staff is normally used to defend against dogs set on the quantum mystic as they are being chased out of town after their business routine."
 AbilityDescName="staff"
 
 [MysticStaff_CV X2PairedWeaponTemplate]
 FriendlyName="Karmic Staff"
 FriendlyNamePlural="Karmic Staves"
-BriefSummary="The Battle Scanner provides extra vision on the battlefield. Soldiers deploy it like a grenade, throwing it to a hidden area of the map that they want to reveal. Any hidden or disguised enemies will be revealed as well."
-TacticalText="<Bullet/> Battle Scanners reveal an area hidden by the \"fog of war\" for multiple turns.\n<Bullet/> Battle Scanners also reveal hidden or disguised enemies."
+BriefSummary="The upgraded quantum staff features more good energy and less bad energy, and is guaranteed to permanently cleanse one's chakras if struck with."
+TacticalText="The upgraded quantum staff features more good energy and less bad energy, and is guaranteed to permanently cleanse one's chakras if struck with."
 AbilityDescName="staff"
 
 [MysticStaff_CV X2PairedWeaponTemplate]
 FriendlyName="New Age Staff"
 FriendlyNamePlural="New Age Staves"
-BriefSummary="The Battle Scanner provides extra vision on the battlefield. Soldiers deploy it like a grenade, throwing it to a hidden area of the map that they want to reveal. Any hidden or disguised enemies will be revealed as well."
-TacticalText="<Bullet/> Battle Scanners reveal an area hidden by the \"fog of war\" for multiple turns.\n<Bullet/> Battle Scanners also reveal hidden or disguised enemies."
+BriefSummary="The pinnacle of quantum mysticism, the New Age Staff is powered exclusively by pure snake oil and always vibrates on positive frequencies."
+TacticalText="The pinnacle of quantum mysticism, the New Age Staff is powered exclusively by pure snake oil and always vibrates on positive frequencies."
 AbilityDescName="staff"
+
+
+[IRI_QuantumMystic_GTS X2SoldierUnlockTemplate]
+DisplayName="Quantum Oblivion"
+Summary="Quantum Mystics can be retrained instantly."
 
 [QuantumMystic X2SoldierClassTemplate]
 DisplayName="Quantum Mystic"
-ClassSummary="Akimbo makes use of dual single-handed firearms to engage enemies at close and medium range, and can specialize in gunplay and avoidance, or surprising enemies with a barrage of melee attacks."
+ClassSummary="An ever unpredictable force on the battlefield, Quantum Mystics make a lot of wild claims, but what are their true capabilities?"
 
 LeftAbilityTreeTitle="Science"
 RightAbilityTreeTitle="Mysticism"
@@ -36,16 +41,77 @@ AbilityTreeTitles[0]="Science"
 AbilityTreeTitles[1]="Mysticism"
 AbilityTreeTitles[2]="Wisdom"
 AbilityTreeTitles[3]="Philosophy"
+AbilityTreeTitles[4]="Energy"
+AbilityTreeTitles[5]="Vibration"
 
+RankNames[0]="Rookie"
+RankNames[1]="Initiate"
+RankNames[2]="Acolyte"
+RankNames[3]="Adept"
+RankNames[4]="Disciple"
+RankNames[5]="Mystic"
+RankNames[6]="Warlock"
+RankNames[7]="Magus"
 
+ShortNames[0]="Rk."
+ShortNames[1]="Int."
+ShortNames[2]="Acl."
+ShortNames[3]="Adp."
+ShortNames[4]="Dsc."
+ShortNames[5]="Mys."
+ShortNames[6]="War."
+ShortNames[7]="Mag."
 
-RankNames;				//  there should
-ShortNames;				//  the abbrevia
-RankIcons;				//  strings of i
+RankIcons[0]= "UILibrary_Common.rank_rookie"
+RankIcons[1]= "UILibrary_Common.psirank_initiate"
+RankIcons[2]= "UILibrary_Common.psirank_acolyte"
+RankIcons[3]= "UILibrary_Common.psirank_adept"
+RankIcons[4]= "UILibrary_Common.psirank_disciple"
+RankIcons[5]= "UILibrary_Common.psirank_mystic"
+RankIcons[6]= "UILibrary_Common.psirank_warlock"
+RankIcons[7]= "UILibrary_Common.psirank_magus"
 
-RandomNickNames;        //  Selected ran
-RandomNickNames_Female; //  Female only 
-RandomNickNames_Male;   //  Male only ni
++RandomNickNames = "Dark Matter"
++RandomNickNames = "True Prophet"
++RandomNickNames = "Woo Master"
++RandomNickNames = "Guru"
++RandomNickNames = "Third Eye"
++RandomNickNames = "Manifester"
++RandomNickNames = "Sage"
++RandomNickNames = "Whimsy"
 
-PhotoboothSoloBLines_Female; //  Female 
-PhotoboothSoloBLines_Male;   //  Male on
+;+RandomNickNames_Female = ""
+;+RandomNickNames_Male = ""
+
++PhotoboothSoloBLines_Female = "Not your average false prophet!"
++PhotoboothSoloBLines_Male = "Not your average false prophet!"
+
++PhotoboothSoloBLines_Female = "Come to her quantum healing seminar!"
++PhotoboothSoloBLines_Male = "Come to his quantum healing seminar!"
+
++PhotoboothSoloBLines_Female = "She will double slit ADVENT's throat!"
++PhotoboothSoloBLines_Male = "He will double slit ADVENT's throat!"
+
++PhotoboothSoloBLines_Female = "Power of her mind knows no limits!"
++PhotoboothSoloBLines_Male = "Power of his mind knows no limits!"
+
++PhotoboothSoloBLines_Female = "She will chase ADVENT across the multiverse!"
++PhotoboothSoloBLines_Male = "He will chase ADVENT across the multiverse!"
+
++PhotoboothSoloBLines_Female = "She makes the best word salad this side of the galaxy!"
++PhotoboothSoloBLines_Male = "He makes the best word salad this side of the galaxy!"
+
++PhotoboothSoloBLines_Female = "Wisdom within!"
++PhotoboothSoloBLines_Male = "Wisdom within!"
+
++PhotoboothSoloBLines_Female = "Boundless energy!"
++PhotoboothSoloBLines_Male = "Boundless energy!"
+
++PhotoboothSoloBLines_Female = "She is the universe!"
++PhotoboothSoloBLines_Male = "He is the universe!"
+
++PhotoboothSoloBLines_Female = "Spiritual warrior!"
++PhotoboothSoloBLines_Male = "Spiritual warrior!"
+
++PhotoboothSoloBLines_Female = "Invisible force of XCOM!"
++PhotoboothSoloBLines_Male = "Invisible force of XCOM!"
