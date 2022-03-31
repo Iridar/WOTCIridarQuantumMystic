@@ -12,12 +12,50 @@ static function array<X2DataTemplate> CreateTemplates()
 static function X2AbilityTemplate QuantumMysticism()
 {
 	local X2AbilityTemplate	Template;
+	local X2Condition_Visibility            VisibilityCondition;
 	
-	`CREATE_X2ABILITY_TEMPLATE(Template, 'QuantumMysticism');
+	//`CREATE_X2ABILITY_TEMPLATE(Template, 'QuantumMysticism');
+
+	Template = class'X2Ability_WeaponCommon'.static.Add_StandardShot('QuantumMysticism');
+
+	Template.IconImage = "img:///UILibrary_PerkIcons.UIPerk_combatstim_psi";
+	Template.ShotHUDPriority = class'UIUtilities_Tactical'.const.CLASS_SQUADDIE_PRIORITY;
+	Template.AbilitySourceName = 'eAbilitySource_Psionic';  
+	Template.bDisplayInUITacticalText = true;
+	Template.bDisplayInUITooltip = true;
+	Template.bDontDisplayInAbilitySummary = false;
+	Template.bHideOnClassUnlock = false;
+
+	Template.AbilityTargetEffects.Length = 0;
+
+	Template.AbilityToHitCalc = new class'X2AbilityToHitCalc_RandomEffect';
+	Template.DisplayTargetHitChance = false;
+
+	// Reset target conditions to allow targeting friendlies
+	Template.AbilityTargetConditions.Length = 0;
+
+	VisibilityCondition = new class'X2Condition_Visibility';
+	VisibilityCondition.bRequireGameplayVisible = true;
+	VisibilityCondition.bAllowSquadsight = true;
+	Template.AbilityTargetConditions.AddItem(VisibilityCondition);
+
+	Template.AbilityTargetConditions.AddItem(default.LivingTargetUnitOnlyProperty);
+
+	Template.AbilityCosts.Length = 0;
+	Template.AbilityCosts.AddItem(default.FreeActionCost);
+	Template.bAllowAmmoEffects = false;
+	AddCooldown(Template, 1);
+
+	Template.DamagePreviewFn = DamagePreview;
 
 	return Template;
 }
 
+static final function bool DamagePreview(XComGameState_Ability AbilityState, StateObjectReference TargetRef, out WeaponDamageValue MinDamagePreview, out WeaponDamageValue MaxDamagePreview, out int AllowsShield)
+{
+	// Empty damage preview
+	return true;
+}
 
 //	========================================
 //				COMMON CODE

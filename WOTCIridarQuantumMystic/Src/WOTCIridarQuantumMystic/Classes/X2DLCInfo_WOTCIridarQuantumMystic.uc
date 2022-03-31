@@ -1,5 +1,7 @@
 class X2DLCInfo_WOTCIridarQuantumMystic extends X2DownloadableContentInfo;
 
+var localized array<string> WisdomOfChopra;
+
 /// <summary>
 /// Called after the Templates have been created (but before they are validated) while this DLC / Mod is installed.
 /// </summary>
@@ -11,22 +13,220 @@ static event OnPostTemplatesCreated()
 	local X2AbilityTemplateManager		AbilityMgr;
 	local array<name>					TemplateNames;
 	local name							TemplateName;
+	local X2AbilityTemplate				AbilityTemplate;
+	local X2AbilityTemplate				QuantumMysticism;
+	local X2ItemTemplateManager			ItemMgr;
+	local X2WeaponTemplate				WeaponTemplate_CV;
+	local X2WeaponTemplate				WeaponTemplate_MG;
+	local X2WeaponTemplate				WeaponTemplate_BM;
+	local WeaponDamageValue				DamageValue;
+	local array<name>					DamageTags;
+	local name							DamageTag;
+	local X2Effect						NewEffect;
+	local X2Effect						Effect;
+	local int i;
 
 	SoldierMgr = class'X2SoldierClassTemplateManager'.static.GetSoldierClassTemplateManager();
+	AbilityMgr = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager();
+	ItemMgr = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
+
 	ClassTemplate = SoldierMgr.FindSoldierClassTemplate('QuantumMystic');
 	if (ClassTemplate == none)
 		return;
 
-	AbilityMgr = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager();
+	WeaponTemplate_CV = X2WeaponTemplate(ItemMgr.FindItemTemplate('MysticStaff_CV'));
+	WeaponTemplate_MG = X2WeaponTemplate(ItemMgr.FindItemTemplate('MysticStaff_MG'));
+	WeaponTemplate_BM = X2WeaponTemplate(ItemMgr.FindItemTemplate('MysticStaff_BM'));
+	
 	AbilityMgr.GetTemplateNames(TemplateNames);
 
+	// 1. Add all abilities in the game into Quantum Mystic's random ability deck.
 	SoldierAbility.ApplyToWeaponSlot = eInvSlot_PrimaryWeapon;
 
 	foreach TemplateNames(TemplateName)
 	{
+		AbilityTemplate = AbilityMgr.FindAbilityTemplate(TemplateName);
+		if (AbilityTemplate == none ||
+			AbilityTemplate.LocFriendlyName == "" ||
+			AbilityTemplate.LocHelpText == "" ||
+			AbilityTemplate.LocLongDescription == "" ||
+			AbilityTemplate.IconImage == "" ||
+			AbilityTemplate.ChosenTraitType == 'Summoning' ||
+			AbilityTemplate.bStationaryWeapon ||
+			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Commander' ||
+			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Standard' ||
+			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Debuff' ||
+			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Item' || 
+			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Debuff' ||
+			IsAdditionalAbility(TemplateName, AbilityMgr))
+			continue;
+
+		// Force the used abilities to always use the same base damage and standard fire animation with the quantum staff	
+		WeaponTemplate_CV.SetAnimationNameForAbility(TemplateName, 'FF_Fire');
+		WeaponTemplate_MG.SetAnimationNameForAbility(TemplateName, 'FF_Fire');
+		WeaponTemplate_BM.SetAnimationNameForAbility(TemplateName, 'FF_Fire');
+		
+		DamageTags = GetAbilityDamageTags(AbilityTemplate);
+		foreach DamageTags(DamageTag)
+		{	
+			if (WeaponTemplate_CV.ExtraDamage.Find('Tag', DamageTag) != INDEX_NONE)
+				continue;
+
+			DamageValue.Tag = DamageTag;
+
+			DamageValue = WeaponTemplate_CV.BaseDamage;
+			WeaponTemplate_CV.ExtraDamage.AddItem(DamageValue);
+
+			DamageValue = WeaponTemplate_MG.BaseDamage;
+			WeaponTemplate_MG.ExtraDamage.AddItem(DamageValue);
+
+			DamageValue = WeaponTemplate_BM.BaseDamage;
+			WeaponTemplate_BM.ExtraDamage.AddItem(DamageValue);
+		}
 		SoldierAbility.AbilityName = TemplateName;
 		ClassTemplate.RandomAbilityDecks[0].Abilities.AddItem(SoldierAbility);
 	}
+
+	// 2. Add random effects from random abilities into Quntum Mysticism.
+	QuantumMysticism = AbilityMgr.FindAbilityTemplate('QuantumMysticism');
+	i = 0;
+
+	while (i < 100)
+	{
+		TemplateName = TemplateNames[`SYNC_RAND_STATIC(TemplateNames.Length)];
+		AbilityTemplate = AbilityMgr.FindAbilityTemplate(TemplateName);
+		if (AbilityTemplate != none)
+		{
+			if (AbilityTemplate.AbilityTargetEffects.Length == 0)
+				continue;
+
+			Effect = AbilityTemplate.AbilityTargetEffects[`SYNC_RAND_STATIC(AbilityTemplate.AbilityTargetEffects.Length)];
+			if (Effect.TargetConditions.Length != 0)
+				continue;
+
+			NewEffect = new class<X2Effect>(class'XComEngine'.static.GetClassByName(Effect.Class.Name))(Effect);		
+			NewEffect.MinStatContestResult = i;
+			NewEffect.MaxStatContestResult = i;
+			QuantumMysticism.AddTargetEffect(NewEffect);
+			i++;
+
+			//`LOG("Adding Effect:" @ NewEffect.Class.Name,, 'IRITEST');
+		}
+
+		TemplateNames.RemoveItem(TemplateName);
+	}
+}
+
+static private function bool IsAdditionalAbility(const name TemplateName, X2AbilityTemplateManager AbilityMgr)
+{
+	local X2DataTemplate DataTemplate;
+	local X2AbilityTemplate AbilityTemplate;
+
+	foreach AbilityMgr.IterateTemplates(DataTemplate)
+	{
+		AbilityTemplate = X2AbilityTemplate(DataTemplate);
+		if (AbilityTemplate.AdditionalAbilities.Find(TemplateName) != INDEX_NONE)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+static private function array<name> GetAbilityDamageTags(const X2AbilityTemplate AbilityTemplate)
+{
+	local array<name> DamageTags;
+	local X2Effect_ApplyWeaponDamage DamageEffect;
+	local X2Effect Effect;
+
+	foreach AbilityTemplate.AbilityShooterEffects(Effect)
+	{
+		DamageEffect = X2Effect_ApplyWeaponDamage(Effect);
+		if (DamageEffect != none)
+		{	
+			if (DamageEffect.DamageTag != '')
+			{
+				DamageTags.AddItem(DamageEffect.DamageTag);
+			}
+		}
+	}
+
+	foreach AbilityTemplate.AbilityTargetEffects(Effect)
+	{
+		DamageEffect = X2Effect_ApplyWeaponDamage(Effect);
+		if (DamageEffect != none)
+		{	
+			if (DamageEffect.DamageTag != '')
+			{
+				DamageTags.AddItem(DamageEffect.DamageTag);
+			}
+		}
+	}
+
+	foreach AbilityTemplate.AbilityMultiTargetEffects(Effect)
+	{
+		DamageEffect = X2Effect_ApplyWeaponDamage(Effect);
+		if (DamageEffect != none)
+		{	
+			if (DamageEffect.DamageTag != '')
+			{
+				DamageTags.AddItem(DamageEffect.DamageTag);
+			}
+		}
+	}
+
+	return DamageTags;
+}
+
+static function string DLCAppendSockets(XComUnitPawn Pawn)
+{
+	local XComGameState_Unit		UnitState;
+	local array<SkeletalMeshSocket> NewSockets;
+
+	UnitState = XComGameState_Unit(`XCOMHISTORY.GetGameStateForObjectID(Pawn.ObjectID));
+	if (UnitState == none)
+		return "";
+
+	if (UnitState.GetSoldierClassTemplateName() == 'QuantumMystic')
+	{
+		NewSockets.AddItem(CreateSocket('MysticStaff', 'RHand', 5, 2, 0, 5, -85, 5));
+		Pawn.Mesh.AppendSockets(NewSockets, true);
+	}
+	return "";
+}
+
+static private function SkeletalMeshSocket CreateSocket(const name SocketName, const name BoneName, optional const float X, optional const float Y, optional const float Z, optional const float dRoll, optional const float dPitch, optional const float dYaw, optional float ScaleX = 1.0f, optional float ScaleY = 1.0f, optional float ScaleZ = 1.0f)
+{
+	local SkeletalMeshSocket NewSocket;
+
+	NewSocket = new class'SkeletalMeshSocket';
+    NewSocket.SocketName = SocketName;
+    NewSocket.BoneName = BoneName;
+
+    NewSocket.RelativeLocation.X = X;
+    NewSocket.RelativeLocation.Y = Y;
+    NewSocket.RelativeLocation.Z = Z;
+
+    NewSocket.RelativeRotation.Roll = dRoll * DegToUnrRot;
+    NewSocket.RelativeRotation.Pitch = dPitch * DegToUnrRot;
+    NewSocket.RelativeRotation.Yaw = dYaw * DegToUnrRot;
+
+	NewSocket.RelativeScale.X = ScaleX;
+	NewSocket.RelativeScale.Y = ScaleY;
+	NewSocket.RelativeScale.Z = ScaleZ;
+    
+	return NewSocket;
+}
+
+static function bool AbilityTagExpandHandler(string InString, out string OutString)
+{
+	if (name(InString) == 'QuantumMysticism')
+	{
+		 OutString = default.WisdomOfChopra[`SYNC_RAND_STATIC(default.WisdomOfChopra.Length)];
+		return true;
+	}
+
+    return false;
 }
 
 /// <summary>
@@ -197,14 +397,7 @@ static function string GetAdditionalMissionDesc(StateObjectReference MissionRef)
 	return "";
 }
 
-/// <summary>
-/// Called from X2AbilityTag:ExpandHandler after processing the base game tags. Return true (and fill OutString correctly)
-/// to indicate the tag has been expanded properly and no further processing is needed.
-/// </summary>
-static function bool AbilityTagExpandHandler(string InString, out string OutString)
-{
-	return false;
-}
+
 
 /// <summary>
 /// Called from XComGameState_Unit:GatherUnitAbilitiesForInit after the game has built what it believes is the full list of
@@ -236,17 +429,6 @@ static event OnLoadedSavedGameToTactical()
 
 }
 //#end issue #647
-
-/// Start Issue #21
-/// <summary>
-/// Called from XComUnitPawn.DLCAppendSockets
-/// Allows DLC/Mods to append sockets to units
-/// </summary>
-static function string DLCAppendSockets(XComUnitPawn Pawn)
-{
-	return "";
-}
-/// End Issue #21
 
 /// Start Issue #24
 /// <summary>
