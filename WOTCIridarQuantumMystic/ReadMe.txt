@@ -3,34 +3,36 @@
 More info here: https://www.patreon.com/Iridar
 
 
-TODO: Finish desc, test Oblivion, test items added when loading a save, rank names
-
 [WOTC] Iridar's Quantum Mystic Class
 
-Adds new soldier class, Quantum Mystic, and three tiers of Mystic Staves, their primary weapons. Quantum Mystics are more rare than your regular soldiers.
+Adds new soldier class, Quantum Mystic, and three tiers of Mystic Staves, their primary weapons. 
 
-[b]Primary Weapons[/b] - Mystic Staff (added by the mod). Mystic Staves are upgraded by sword schematics.
+Quantum Mystics are available through regular promotions, albeit slightly more rare than your regular soldiers.
+
+[b]Primary Weapons[/b] - Mystic Staff (added by the mod, upgraded by sword schematics)
 [b]Secondary Weapons[/b] - none
 [b]Armor[/b] - Reaper Armor
 
+[h1]ABILITIES[/h1]
 
-[h1]KNOWN ISSUES[/h1]
+[b]Quantum Mysticism[/b] is the bread and butter ability of any aspiring Quantum Mystic. What does it do? What doesn't it do! Damage enemies, heal wounds, strengthen body and soul, cure illnesses.. all through the power of the mind and manifestation of one's desires. Or at least Quantum Mystics claim so.
 
-Just trust me on this and don't add this soldier class to Ironman campaigns.
+Quantum Mysticism does not cost any action points, and it can be used once per turn.
+
+Other abilities of Quantum Mystics are practically limitless, just try it and you will see for yourself. The only important thing is to believe. Doesn't that make sense?
 
 [h1]REQUIREMENTS[/h1]
-
-[url=https://steamcommunity.com/workshop/filedetails/?id=1134256495][b]X2 WOTC Community Highlander[/b][/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2405138536][b]Templar Gauntlets For Soldiers Animation Patch[/b][/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2550561145][b][WOTC] Community Promotion Screen[/b][/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2363075446][b][WOTC] Iridar's Template Master - Core[/b][/url]
-
-Safe to add mid-campaign.
+[list]
+[*][url=https://steamcommunity.com/workshop/filedetails/?id=1134256495][b]X2 WOTC Community Highlander[/b][/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2405138536][b]Templar Gauntlets For Soldiers Animation Patch[/b][/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2550561145][b][WOTC] Community Promotion Screen[/b][/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2363075446][b][WOTC] Iridar's Template Master - Core[/b][/url][/list]
+Safe to add mid-campaign. Just trust me on this and don't add this soldier class to Ironman campaigns.
 
 [h1]CONFIGURATION[/h1]
 
 This mod is configurable through various configuration files located at:
-[code]..\steamapps\workshop\content\268500\2595660540\Config\[/code]
+[code]..\steamapps\workshop\content\268500\2787647090\Config\[/code]
 
 [h1]CREDITS AND DONATIONS[/h1]
 

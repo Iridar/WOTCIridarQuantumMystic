@@ -3,6 +3,7 @@ class X2DLCInfo_WOTCIridarQuantumMystic extends X2DownloadableContentInfo;
 var localized array<string> WisdomOfChopra;
 
 var config array<name> StartingItemsToAddOnSaveLoad;
+var config array<name> AlwaysExcludeAbilities;
 
 /// <summary>
 /// Called after the Templates have been created (but before they are validated) while this DLC / Mod is installed.
@@ -44,7 +45,11 @@ static event OnPostTemplatesCreated()
 
 	// 1. Add all abilities in the game into Quantum Mystic's random ability deck.
 	SoldierAbility.ApplyToWeaponSlot = eInvSlot_PrimaryWeapon;
-	TemplateNames.RemoveItem('QuantumMysticism');
+
+	foreach default.AlwaysExcludeAbilities(TemplateName)
+	{
+		TemplateNames.RemoveItem(TemplateName);
+	}
 
 	foreach TemplateNames(TemplateName)
 	{
@@ -55,13 +60,15 @@ static event OnPostTemplatesCreated()
 			AbilityTemplate.LocLongDescription == "" ||
 			AbilityTemplate.IconImage == "" ||
 			AbilityTemplate.ChosenTraitType == 'Summoning' ||
+			AbilityTemplate.ChosenTraitType == 'Adversary' ||
 			AbilityTemplate.bStationaryWeapon ||
 			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Commander' ||
 			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Standard' ||
 			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Debuff' ||
-			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Item' || 
+			/*AbilityTemplate.AbilitySourceName == 'eAbilitySource_Item' || */
 			AbilityTemplate.AbilitySourceName == 'eAbilitySource_Debuff' ||
-			IsAdditionalAbility(TemplateName, AbilityMgr))
+			IsAdditionalAbility(TemplateName, AbilityMgr)||
+			HasFocusCost(AbilityTemplate))
 			continue;
 
 		// Force the used abilities to always use the same base damage and standard fire animation with the quantum staff	
@@ -94,7 +101,7 @@ static event OnPostTemplatesCreated()
 	QuantumMysticism = AbilityMgr.FindAbilityTemplate('QuantumMysticism');
 	i = 0;
 
-	while (i < 100)
+	while (i < 100 && TemplateNames.Length > 0)
 	{
 		TemplateName = TemplateNames[`SYNC_RAND_STATIC(TemplateNames.Length)];
 		AbilityTemplate = AbilityMgr.FindAbilityTemplate(TemplateName);
@@ -143,6 +150,17 @@ static private function AddGTSUnlockTemplate(name UnlockTemplateName)
     }
 }
 
+static private function bool HasFocusCost(const X2AbilityTemplate AbilityTemplate)
+{
+	local X2AbilityCost Cost;
+
+	foreach AbilityTemplate.AbilityCosts(Cost)
+	{
+		if (X2AbilityCost_Focus(Cost) != none)
+			return true;
+	}
+	return false;
+}
 
 static private function bool IsAdditionalAbility(const name TemplateName, X2AbilityTemplateManager AbilityMgr)
 {
@@ -249,7 +267,7 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 {
 	if (name(InString) == 'QuantumMysticism')
 	{
-		 OutString = default.WisdomOfChopra[`SYNC_RAND_STATIC(default.WisdomOfChopra.Length)];
+		OutString = default.WisdomOfChopra[`SYNC_RAND_STATIC(default.WisdomOfChopra.Length)];
 		return true;
 	}
 
@@ -261,6 +279,7 @@ static function bool AbilityTagExpandHandler(string InString, out string OutStri
 /// DLC / Mod to perform custom processing in response. This will only be called once the first time a player loads a save that was
 /// create without the content installed. Subsequent saves will record that the content was installed.
 /// </summary>
+
 static event OnLoadedSavedGame()
 {
 	local XComGameStateHistory				History;

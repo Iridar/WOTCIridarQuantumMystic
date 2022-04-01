@@ -11,6 +11,7 @@
   <ItemGroup>
     <Folder Include="Config\" />
     <Folder Include="Config\Base" />
+    <Folder Include="Config\Compatibility" />
     <Folder Include="Localization\" />
     <Folder Include="ContentForCook" />
     <Folder Include="Src\" />
@@ -25,6 +26,12 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Config\Base\XComEngine.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComLW_InfiltrationSettings.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComLW_Overhaul.ini">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Config\XComClassData.ini">

@@ -11,8 +11,9 @@ static function array<X2DataTemplate> CreateTemplates()
 
 static function X2AbilityTemplate QuantumMysticism()
 {
-	local X2AbilityTemplate	Template;
-	local X2Condition_Visibility            VisibilityCondition;
+	local X2AbilityTemplate			Template;
+	local X2Condition_Visibility	VisibilityCondition;
+	local X2Condition_UnitProperty	UnitProperty;
 	
 	//`CREATE_X2ABILITY_TEMPLATE(Template, 'QuantumMysticism');
 
@@ -31,6 +32,10 @@ static function X2AbilityTemplate QuantumMysticism()
 	Template.AbilityToHitCalc = new class'X2AbilityToHitCalc_RandomEffect';
 	Template.DisplayTargetHitChance = false;
 
+	Template.AbilityTargetStyle = default.SingleTargetWithSelf;
+	Template.TargetingMethod = class'X2TargetingMethod_TopDown';
+	Template.bUsesFiringCamera = false;
+
 	// Reset target conditions to allow targeting friendlies
 	Template.AbilityTargetConditions.Length = 0;
 
@@ -39,7 +44,14 @@ static function X2AbilityTemplate QuantumMysticism()
 	VisibilityCondition.bAllowSquadsight = true;
 	Template.AbilityTargetConditions.AddItem(VisibilityCondition);
 
-	Template.AbilityTargetConditions.AddItem(default.LivingTargetUnitOnlyProperty);
+	UnitProperty = new class'X2Condition_UnitProperty';
+	UnitProperty.ExcludeAlive = false;
+	UnitProperty.ExcludeDead = true;
+	UnitProperty.ExcludeFriendlyToSource = false;
+	UnitProperty.ExcludeHostileToSource = false;
+	UnitProperty.FailOnNonUnits = true;
+	UnitProperty.ExcludeCivilian = true;
+	Template.AbilityTargetConditions.AddItem(UnitProperty);
 
 	Template.AbilityCosts.Length = 0;
 	Template.AbilityCosts.AddItem(default.FreeActionCost);

@@ -12,24 +12,24 @@ BriefSummary="This staff is normally used to defend against dogs set on the quan
 TacticalText="This staff is normally used to defend against dogs set on the quantum mystic as they are being chased out of town after their business routine."
 AbilityDescName="staff"
 
-[MysticStaff_CV X2PairedWeaponTemplate]
+[MysticStaff_MG X2PairedWeaponTemplate]
 FriendlyName="Karmic Staff"
 FriendlyNamePlural="Karmic Staves"
-BriefSummary="The upgraded quantum staff features more good energy and less bad energy, and is guaranteed to permanently cleanse one's chakras if struck with."
-TacticalText="The upgraded quantum staff features more good energy and less bad energy, and is guaranteed to permanently cleanse one's chakras if struck with."
+BriefSummary="The upgraded quantum staff is made of 100% silicon and features more good energy and less bad energy, and is guaranteed to permanently cleanse one's chakras if struck with."
+TacticalText="The upgraded quantum staff is made of 100% silicon and features more good energy and less bad energy, and is guaranteed to permanently cleanse one's chakras if struck with."
 AbilityDescName="staff"
 
-[MysticStaff_CV X2PairedWeaponTemplate]
+[MysticStaff_BM X2PairedWeaponTemplate]
 FriendlyName="New Age Staff"
 FriendlyNamePlural="New Age Staves"
-BriefSummary="The pinnacle of quantum mysticism, the New Age Staff is powered exclusively by pure snake oil and always vibrates on positive frequencies."
-TacticalText="The pinnacle of quantum mysticism, the New Age Staff is powered exclusively by pure snake oil and always vibrates on positive frequencies."
+BriefSummary="The pinnacle of quantum mysticism, the New Age Staff is powered exclusively by pure Viper oil and always vibrates on positive frequencies."
+TacticalText="The pinnacle of quantum mysticism, the New Age Staff is powered exclusively by pure Viper oil and always vibrates on positive frequencies."
 AbilityDescName="staff"
 
 
 [IRI_QuantumMystic_GTS X2SoldierUnlockTemplate]
 DisplayName="Quantum Oblivion"
-Summary="Quantum Mystics can be retrained instantly."
+Summary="Quantum Mystics can be retrained nearly instantly."
 
 [QuantumMystic X2SoldierClassTemplate]
 DisplayName="Quantum Mystic"
@@ -44,23 +44,23 @@ AbilityTreeTitles[3]="Philosophy"
 AbilityTreeTitles[4]="Energy"
 AbilityTreeTitles[5]="Vibration"
 
-RankNames[0]="Rookie"
-RankNames[1]="Initiate"
-RankNames[2]="Acolyte"
-RankNames[3]="Adept"
-RankNames[4]="Disciple"
-RankNames[5]="Mystic"
-RankNames[6]="Warlock"
-RankNames[7]="Magus"
+;RankNames[0]="Rookie"
+;RankNames[1]="Initiate"
+;RankNames[2]="Acolyte"
+;RankNames[3]="Adept"
+;RankNames[4]="Disciple"
+;RankNames[5]="Mystic"
+;RankNames[6]="Warlock"
+;RankNames[7]="Magus"
 
-ShortNames[0]="Rk."
-ShortNames[1]="Int."
-ShortNames[2]="Acl."
-ShortNames[3]="Adp."
-ShortNames[4]="Dsc."
-ShortNames[5]="Mys."
-ShortNames[6]="War."
-ShortNames[7]="Mag."
+;ShortNames[0]="Rk."
+;ShortNames[1]="Int."
+;ShortNames[2]="Acl."
+;ShortNames[3]="Adp."
+;ShortNames[4]="Dsc."
+;ShortNames[5]="Mys."
+;ShortNames[6]="War."
+;ShortNames[7]="Mag."
 
 RankIcons[0]= "UILibrary_Common.rank_rookie"
 RankIcons[1]= "UILibrary_Common.psirank_initiate"
@@ -79,6 +79,8 @@ RankIcons[7]= "UILibrary_Common.psirank_magus"
 +RandomNickNames = "Manifester"
 +RandomNickNames = "Sage"
 +RandomNickNames = "Whimsy"
++RandomNickNames = "Soul"
++RandomNickNames = "Journey"
 
 ;+RandomNickNames_Female = ""
 ;+RandomNickNames_Male = ""
@@ -104,6 +106,9 @@ RankIcons[7]= "UILibrary_Common.psirank_magus"
 +PhotoboothSoloBLines_Female = "Wisdom within!"
 +PhotoboothSoloBLines_Male = "Wisdom within!"
 
++PhotoboothSoloBLines_Female = "Periodic table is her piano!"
++PhotoboothSoloBLines_Male = "Periodic table is his piano!"
+
 +PhotoboothSoloBLines_Female = "Boundless energy!"
 +PhotoboothSoloBLines_Male = "Boundless energy!"
 
@@ -115,3 +120,6 @@ RankIcons[7]= "UILibrary_Common.psirank_magus"
 
 +PhotoboothSoloBLines_Female = "Invisible force of XCOM!"
 +PhotoboothSoloBLines_Male = "Invisible force of XCOM!"
+
++PhotoboothSoloBLines_Female = "ADVENT is backdrop for her word salad!"
++PhotoboothSoloBLines_Male = "ADVENT is backdrop for his word salad!"
