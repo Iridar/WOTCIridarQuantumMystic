@@ -28,10 +28,22 @@
     <Content Include="Config\Base\XComEngine.ini">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Config\Compatibility\XComClassData.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComInfiltration.ini">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Config\Compatibility\XComLW_InfiltrationSettings.ini">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Config\Compatibility\XComLW_Overhaul.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComRPG.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\Compatibility\XComRPGO_ClassIcons.ini">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Config\XComClassData.ini">

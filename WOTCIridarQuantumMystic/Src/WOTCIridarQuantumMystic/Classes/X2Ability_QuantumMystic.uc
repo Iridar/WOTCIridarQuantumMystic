@@ -56,6 +56,7 @@ static function X2AbilityTemplate QuantumMysticism()
 	Template.AbilityCosts.Length = 0;
 	Template.AbilityCosts.AddItem(default.FreeActionCost);
 	Template.bAllowAmmoEffects = false;
+	Template.bUniqueSource = true;
 	AddCooldown(Template, 1);
 
 	Template.DamagePreviewFn = DamagePreview;

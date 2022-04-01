@@ -70,6 +70,7 @@ RankIcons[4]= "UILibrary_Common.psirank_disciple"
 RankIcons[5]= "UILibrary_Common.psirank_mystic"
 RankIcons[6]= "UILibrary_Common.psirank_warlock"
 RankIcons[7]= "UILibrary_Common.psirank_magus"
+RankIcons[8]= "UILibrary_LW_PerkPack.psirank_Master"
 
 +RandomNickNames = "Dark Matter"
 +RandomNickNames = "True Prophet"
