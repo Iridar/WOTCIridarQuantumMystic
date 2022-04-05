@@ -34,6 +34,15 @@ Safe to add mid-campaign. Just trust me on this and don't add this soldier class
 This mod is configurable through various configuration files located at:
 [code]..\steamapps\workshop\content\268500\2787647090\Config\[/code]
 
+[h1]COMPATIBILITY[/h1]
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2683996590][b]Long War of the Chosen[/b][/url] - compatible out of the box. Quantum Mystic gains an additional rank and Mystic Staves are converted to LWOTC single-build system and are given infiltration values.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2567230602][b][WOTC] Prototype Armoury[/b][/url] and [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2567230730][b][WOTC] Covert Infiltration[/b][/url] - compatible out of the box, Mystic Staves are converted to single build system and are given infiltration values.
+
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=1280477867][b]Musashi's RPG Overhaul[/b][/url] - compatible out of the box. Quantum Mystic class is disabled, RPGO Soldiers are given access to Mystic Staves. The Quantum Mysticism ability is attached to staves directly. Make sure to unsubscribe from Community Promotion Screen while playing with RPGO. The Quantum Mystic's GTS perk will remain in GTS, but it will not do anything for RPGO Soldiers.
+
+
 [h1]CREDITS AND DONATIONS[/h1]
 
 Huge thanks to my wonderful patrons for their continued support. Please consider [b][url=https://www.patreon.com/Iridar]supporting me on Patreon[/url][/b] if you require tech support, have a suggestion for a feature, or simply wish to help me create more awesome mods.
